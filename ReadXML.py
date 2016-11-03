@@ -108,13 +108,14 @@ for hr_part in hr:
             pattern = compile('\n+')
             cmt_text = pattern.sub('\n', cmt_text)
             cmt_text = cmt_text.replace("&gt;", '>')
+            cmt_text = cmt_text.replace("&lt;", '<')
             pattern = compile(".*%s" % cond_part[0], IGNORECASE and MULTILINE and DOTALL)
             cmt_text = pattern.sub(cond_part[0], cmt_text)
             pattern = compile(".*LIST OF SUPPORTED TRAPS:", IGNORECASE and MULTILINE and DOTALL)
             cmt_text = pattern.sub('LIST OF SUPPORTED TRAPS:', cmt_text)
             pattern = compile(".*NO CODE CHANGE NEEDED.*", IGNORECASE and MULTILINE)
-            need_trim = ['.*CODE CHANGE.*', '.*CHANGE SET.*', '.*github-isl-01.ca.com.*', '.*SHA-1.*', '\\\+', '>',
-                         '&lt;']
+            need_trim = ['.*CODE CHANGE.*', '.*CHANGE SET.*', '.*github-isl-01.ca.com.*', '.*SHA-1.*', '\\\+', '\\\>',
+                         '> ', '\n>']
             for element in need_trim:
                 pattern = compile("%s" % element, IGNORECASE)
                 cmt_text = pattern.sub('', cmt_text)
@@ -190,7 +191,8 @@ for hr_part in hr:
             standalone = standalone + begin + format_ID + " " + title + "\n" + cmt_text
 uim = quarter + " " + str(year) + " - " + "DEVICE CERTIFICATION DEPLOYER " + str(flag_UIM) + " VERIFICATIONS\n" + bundle
 uim = uim.replace("\n\n\n", "\n\n")
-
+uim = uim.replace("\nMF", "\n\nMF")
+print uim
 bundle = quarter + " " + str(year) + " " + "VERIFICATIONS\n" + bundle
 bundle = bundle.replace("\n\n\n", "\n\n")
 
